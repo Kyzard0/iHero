@@ -1,0 +1,8 @@
+Django
+djangorestframework
+django-rest-auth
+django-allauth
+django-cors-headers
+geopy
+psycopg2
+ipython
