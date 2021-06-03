@@ -1,0 +1,55 @@
+version: '3'
+
+volumes:
+  db_dev: {}
+
+services:
+
+  backend:
+    build: ./backend
+    command: bash -c "python manage.py migrate --noinput && python manage.py runserver 0.0.0.0:8000"
+    volumes:
+      - ./backend:/usr/src/app # Link container volume to local files
+    environment:
+      - DB_HOST=database
+      - DB_NAME=ihero
+      - DB_USER=ihero
+      - DB_PASS=ihero
+    depends_on:
+      - database
+    expose:
+      - 8000
+
+  frontend:
+    stdin_open: true
+    build: ./frontend/ihero_frontend
+    volumes:
+      - ./frontend/ihero_frontend:/usr/src/app
+      - /usr/src/app/node_modules
+    expose:
+      - 3000
+    environment:
+      - NODE_ENV=development
+    depends_on:
+      - backend
+  
+  database:
+    image: postgres:9.5
+    restart: on-failure
+    container_name: ihero_database
+    environment:
+      - POSTGRES_DB=ihero
+      - POSTGRES_USER=ihero
+      - POSTGRES_PASSWORD=ihero
+    volumes:
+        - db_dev:/var/lib/postgresql/data
+    expose:
+      - 5432
+
+  nginx:
+    build: ./nginx
+    ports:
+      - 81:80
+    depends_on:
+      - backend
+      - frontend
