@@ -1,12 +1,7 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
-# Byte-compiled / optimized / DLL files
-__pycache__/
-*.py[cod]
-*$py.class
-
 # dependencies
-/frontend/ihero_frontend/node_modules
+/node_modules
 /.pnp
 .pnp.js
 
