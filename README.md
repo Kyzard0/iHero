@@ -103,6 +103,30 @@ Por cada ameaça derrotada possuir uma chave estrangeira com o herói é simples
 - A validação da localização do herói é feita por regex e embora não mostre mensagem, não permite a criação do herói se fugir do padrão.
 - Não foi possível fazer uma tabela mais elaborada de histórico de ameaças, pois não consegui utilizar Datatables no react e não tinha tempo para fazer de outra forma.
 
+## Como rodar
+
+Para virtualizaçao e ambiente da aplicação foi utilizado o Docker e Docker-Compose em conjunto com o Nginx para proxy reverso para que fosse possível rodar as duas aplicaçoes (back e front) no mesmo domínio.
+
+Para rodar o projeto é necessário ter o Docker e docker-compose instalado na máquina.
+
+Caso você não tenha instalado, pode seguir [esse gist](https://gist.github.com/raisiqueira/fa6e55ffaaaffde717a2fe2230422fe9) que nele tem os comandos (para linux) pra rodar o docker.
+
+Depois de ter o docker instalado, na pasta raíz do repositório é só rodar o comando:
+
+```bash
+$ docker-compose up --build
+```
+
+Caso queira rodar sem olhar os logs é só colocar a tag `-d` e após rodar a primeira vez pode utilizar sem o `--build`.
+
+Nesse docker-compose existem quatro serviços: O backend, frontend, postgresql e o nginx.
+
+Na primeira vez com esse primeiro comando, pode ocorrer um erro pois o banco de dados está sendo criado e mesmo com o backend dependendo dele as vezes pode ocorrer de dar falha, então é só rodar o comando novamente.
+
+Ao rodar o comando todas as dependências serão instaladas e as migrações do banco serão aplicadas.
+
+Para acessar a aplicação é só acessar `http://localhost:81/` no navegador de escolha.
+
 ## Considerações Finais
 
 Foi um ótimo desafio para exercitar e aprofundar alguns conhecimentos e foi uma ótima oportunidade de me aventurar no frontend e desenvolver em um framework que não possuo tanta familiaridade, fiz o melhor no tempo que consegui, espero que gostem :).
